@@ -40,109 +40,109 @@ struct bank_info //사용자 정보
 
 struct bank_info bank = { "씨쁠쁠", 6540000, 246000, {4, 3, 2, 1}, {6, 5, 4, 3, 2, 1}, 1972112131028, "국민은행" };
 
-int main(void)
-{
-	int posX = 47, posY = 2;
-
-	input_card(&bank);
-
-	printf("┌───────────────────────────────────┬────────────────────────┐\n");
-	printf("│                                   │                        │\n");
-	printf("│     어서오세요 %s 고객님!     │             입금       │\n", bank.name);
-	printf("│   원하시는 기능을 선택해주세요.   │             출금       │\n");
-	printf("│                                   │             예금 조회  │\n");
-	printf("│                                   │             송금       │\n");
-	printf("│                                   │             종료       │\n");
-	printf("│                                   │                        │\n");
-	printf("├───────────────────────────────────┤                        │\n");
-	printf("│                                   │                        │\n");
-	printf("│                                   │                        │\n");
-	printf("│                                   │                        │\n");
-	printf("│                                   │                        │\n");
-	printf("│                                   │                        │\n");
-	printf("│                                   │                        │\n");
-	printf("└───────────────────────────────────┴────────────────────────┘\n");
-
-	gotoXY(posX, posY);
-	printf("▶");
-
-
-	while (1) //작업선택
-	{
-		if (_kbhit())
-		{
-			inputKey = _getch();
-
-			if (inputKey == UP)
-			{
-				if (posY != 2)
-				{
-					gotoXY(posX, posY);
-					printf("  ");
-					posY--;
-					gotoXY(posX, posY);
-					printf("▶ ");
-				}
-
-			}
-			else if (inputKey == DOWN)
-			{
-				if (posY != 6)
-				{
-					gotoXY(posX, posY);
-					printf("  ");
-					posY++;
-					gotoXY(posX, posY);
-					printf("▶ ");
-				}
-
-			}
-			else if (inputKey == ENTER)
-			{
-				if (posY == 2)
-				{
-					input_money(&bank);
-				}
-				else if (posY == 3)
-				{
-					with_money(&bank);
-				}
-				else if (posY == 4)
-				{
-					check_money(&bank);
-				}
-				else if (posY == 5)
-				{
-					remit_money(&bank);
-				}
-				else if (posY == 6)
-				{
-					CLR
-						printf("┌───────────────────────────────────┬────────────────────────┐\n");
-					printf("│                                   │                        │\n");
-					printf("│                                   │                        │\n");
-					printf("│                                   │                        │\n");
-					printf("│     이용해주셔서 감사합니다.      │                        │\n");
-					printf("│                                   │                        │\n");
-					printf("│                                   │                        │\n");
-					printf("│                                   │                        │\n");
-					printf("├───────────────────────────────────┤                        │\n");
-					printf("│                                   │                        │\n");
-					printf("│                                   │                        │\n");
-					printf("│                                   │                        │\n");
-					printf("│                                   │                        │\n");
-					printf("│                                   │                        │\n");
-					printf("│                                   │                        │\n");
-					printf("└───────────────────────────────────┴────────────────────────┘\n");
-					Sleep(5000);
-
-					CLR
-						main();
-				}
-			}
-		}
-	}
-}
+//int main(void)
+//{
+//	int posX = 47, posY = 2;
+//
+//	input_card(&bank);
+//
+//	printf("┌───────────────────────────────────┬────────────────────────┐\n");
+//	printf("│                                   │                        │\n");
+//	printf("│     어서오세요 %s 고객님!     │             입금       │\n", bank.name);
+//	printf("│   원하시는 기능을 선택해주세요.   │             출금       │\n");
+//	printf("│                                   │             예금 조회  │\n");
+//	printf("│                                   │             송금       │\n");
+//	printf("│                                   │             종료       │\n");
+//	printf("│                                   │                        │\n");
+//	printf("├───────────────────────────────────┤                        │\n");
+//	printf("│                                   │                        │\n");
+//	printf("│                                   │                        │\n");
+//	printf("│                                   │                        │\n");
+//	printf("│                                   │                        │\n");
+//	printf("│                                   │                        │\n");
+//	printf("│                                   │                        │\n");
+//	printf("└───────────────────────────────────┴────────────────────────┘\n");
+//
+//	gotoXY(posX, posY);
+//	printf("▶");
+//
+//
+//	while (1) //작업선택
+//	{
+//		if (_kbhit())
+//		{
+//			inputKey = _getch();
+//
+//			if (inputKey == UP)
+//			{
+//				if (posY != 2)
+//				{
+//					gotoXY(posX, posY);
+//					printf("  ");
+//					posY--;
+//					gotoXY(posX, posY);
+//					printf("▶ ");
+//				}
+//
+//			}
+//			else if (inputKey == DOWN)
+//			{
+//				if (posY != 6)
+//				{
+//					gotoXY(posX, posY);
+//					printf("  ");
+//					posY++;
+//					gotoXY(posX, posY);
+//					printf("▶ ");
+//				}
+//
+//			}
+//			else if (inputKey == ENTER)
+//			{
+//				if (posY == 2)
+//				{
+//					input_money(&bank);
+//				}
+//				else if (posY == 3)
+//				{
+//					with_money(&bank);
+//				}
+//				else if (posY == 4)
+//				{
+//					check_money(&bank);
+//				}
+//				else if (posY == 5)
+//				{
+//					remit_money(&bank);
+//				}
+//				else if (posY == 6)
+//				{
+//					CLR
+//						printf("┌───────────────────────────────────┬────────────────────────┐\n");
+//					printf("│                                   │                        │\n");
+//					printf("│                                   │                        │\n");
+//					printf("│                                   │                        │\n");
+//					printf("│     이용해주셔서 감사합니다.      │                        │\n");
+//					printf("│                                   │                        │\n");
+//					printf("│                                   │                        │\n");
+//					printf("│                                   │                        │\n");
+//					printf("├───────────────────────────────────┤                        │\n");
+//					printf("│                                   │                        │\n");
+//					printf("│                                   │                        │\n");
+//					printf("│                                   │                        │\n");
+//					printf("│                                   │                        │\n");
+//					printf("│                                   │                        │\n");
+//					printf("│                                   │                        │\n");
+//					printf("└───────────────────────────────────┴────────────────────────┘\n");
+//					Sleep(5000);
+//
+//					CLR
+//						main();
+//				}
+//			}
+//		}
+//	}
+//}
 
 /*====================================================================
 							카드/통장 인식

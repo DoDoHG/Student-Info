@@ -18,10 +18,10 @@
     <ClCompile Include="bank_gotoXY.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="linkedlist.c">
+    <ClCompile Include="Student info.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Student info.c">
+    <ClCompile Include="linkedlist.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

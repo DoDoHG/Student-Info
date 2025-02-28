@@ -126,70 +126,70 @@ void* InsertItem(void* head, int item_index, int num)
 	}
 }
 
-int main(void)
-{
-	int item_index;
-	int ret;
-	item* head;
-	item* tail;
-
-	head = malloc(sizeof(item));
-
-	head->val = 0;
-	head->next = NULL;
-
-	tail = head;
-
-	for (int i = 1; i <= 10; i++)
-	{
-		item* p = malloc(sizeof(item));
-
-		//마지막 노드 찾기
-		// 
-		//마지막 노드의 next에 p를 할당.
-		p->val = i;
-		p->next = NULL;
-
-		tail->next = p;
-		tail = p;	
-	}
-
-
-
-	item_index = 0;
-	for (int i = 0; i <= 10; i++)
-	{
-		ret = fetchValue(head, i);
-		printf("%d 번째 item 값 : %d\n", i, ret);
-	}
-
-	printf("\n");
-	head = DeleteItem(head, 1);
-	head = DeleteItem(head, 3);
-	head = DeleteItem(head, 6);
-	
-	for (int i = 0; i <= 10; i++)
-	{
-		ret = fetchValue(head, i);
-		printf("%d 번째 item 값 : %d\n", i, ret);
-	}
-
-	printf("\n");
-	head = InsertItem(head, 1, 20);
-	head = InsertItem(head, 3, 30);
-	head = InsertItem(head, 6, 60);
-
-
-	for (int i = 0; i <= 10; i++)
-	{
-		ret = fetchValue(head, i);
-		printf("%d 번째 item 값 : %d\n", i, ret);
-	}
-
-	
-
-	return 0;
-}
+//int main(void)
+//{
+//	int item_index;
+//	int ret;
+//	item* head;
+//	item* tail;
+//
+//	head = malloc(sizeof(item));
+//
+//	head->val = 0;
+//	head->next = NULL;
+//
+//	tail = head;
+//
+//	for (int i = 1; i <= 10; i++)
+//	{
+//		item* p = malloc(sizeof(item));
+//
+//		//마지막 노드 찾기
+//		// 
+//		//마지막 노드의 next에 p를 할당.
+//		p->val = i;
+//		p->next = NULL;
+//
+//		tail->next = p;
+//		tail = p;	
+//	}
+//
+//
+//
+//	item_index = 0;
+//	for (int i = 0; i <= 10; i++)
+//	{
+//		ret = fetchValue(head, i);
+//		printf("%d 번째 item 값 : %d\n", i, ret);
+//	}
+//
+//	printf("\n");
+//	head = DeleteItem(head, 1);
+//	head = DeleteItem(head, 3);
+//	head = DeleteItem(head, 6);
+//	
+//	for (int i = 0; i <= 10; i++)
+//	{
+//		ret = fetchValue(head, i);
+//		printf("%d 번째 item 값 : %d\n", i, ret);
+//	}
+//
+//	printf("\n");
+//	head = InsertItem(head, 1, 20);
+//	head = InsertItem(head, 3, 30);
+//	head = InsertItem(head, 6, 60);
+//
+//
+//	for (int i = 0; i <= 10; i++)
+//	{
+//		ret = fetchValue(head, i);
+//		printf("%d 번째 item 값 : %d\n", i, ret);
+//	}
+//
+//	
+//
+//	return 0;
+//}
 
 
 
