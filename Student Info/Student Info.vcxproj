@@ -129,8 +129,7 @@
   <ItemGroup>
     <ClCompile Include="bank_gotoXY.c" />
     <ClCompile Include="linkedlist.c" />
-    <ClCompile Include="Student Info.c" />
-    <ClCompile Include="Student_info.c" />
+    <ClCompile Include="Student info.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
