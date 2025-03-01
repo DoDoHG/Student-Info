@@ -23,7 +23,7 @@ void* Insert_data(void* t);
 void* Delete_data(void* t);
 
 //UI Fn
-char screen_main(void);
+char* screen_main(void);
 
 typedef struct _student_info {
 	int age;
@@ -52,7 +52,7 @@ void* Delete_data(void* t)
 	NULL;
 }
 
-char screen_main(void)
+char* screen_main(void)
 {
 	int input_num = 0;
 
