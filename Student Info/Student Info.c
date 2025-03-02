@@ -21,11 +21,17 @@
 
 //System Fn
 void* Search_data(void* t);
+void* Search_data_age(void* t);
+void* Search_data_name(void* t);
 void* Insert_data(void* t);
 void* Delete_data(void* t);
 
 //UI Fn
 char* screen_main(void);
+void* screen_search(void);
+void* screen_addition(void);
+void* screen_delete(void);
+void* screen_exit(void);
 
 typedef struct _student_info {
 	int age;
@@ -42,36 +48,41 @@ student_info* next;
 
 int main(void)
 {
+	const char* screen;
+
 	head = malloc(sizeof(student_info));
 	head->age = 0;
 	head->phone = 0;
 	strcpy(head->name, "Empty");
 	head->next = NULL;
 
-
-	const char* screen = screen_main();
-	printf("%s\n", screen);
-
-
-	if (screen == "Search")
-	{
-		screen_search();
-	}
-	else if (screen == "Add")
-	{
-		screen_addition();
-	}
-	else if (screen == "Del")
-	{
-		screen_delete();
-	}
-	else if (screen == "Exit")
+	while (1)
 	{
 		SCREEN_CLEAR;
-		printf("프로그램을 종료합니다.");
-		Sleep(5000);
-		SCREEN_CLEAR;
+
+		screen = screen_main();
+
+		if (screen == "Search")
+		{
+			screen_search();
+		}
+		else if (screen == "Add")
+		{
+			screen_addition();
+		}
+		else if (screen == "Del")
+		{
+			screen_delete();
+		}
+		else if (screen == "Exit")
+		{
+			SCREEN_CLEAR;
+			printf("프로그램을 종료합니다.");
+			Sleep(5000);
+			exit(0);
+		}
 	}
+	
 
 
 	return 0;
@@ -80,7 +91,17 @@ int main(void)
 
 
 //System Fn
-void* Search_data(void* t)
+void* Search_data_all(void* t)
+{
+	NULL;
+}
+
+void* Search_data_age(void* t)
+{
+	NULL;
+}
+
+void* Search_data_name(void* t)
 {
 	NULL;
 }
@@ -94,7 +115,6 @@ void* Delete_data(void* t)
 {
 	NULL;
 }
-
 
 
 //UI Fn
@@ -135,13 +155,47 @@ char* screen_main(void)
 			SCREEN_CLEAR;
 		}
 	}
-	
 }
 
 void* screen_search(void)
 {
+	int input_num = 0;
+
 	SCREEN_CLEAR;
-	printf("검색 조건을 선택하세요.\n");
+
+	while (1)
+	{
+		printf("검색 조건을 선택하세요.\n\n");
+		printf("1. 전체 검색\n");
+		printf("2. 나이(이상) 검색\n");
+		printf("3. 성씨 검색\n");
+		printf("0. 메인으로 돌아가기\n\n");
+
+		scanf("%d", &input_num);
+
+		if (input_num == 1)
+		{
+			Search_data_all("All");
+		}
+		else if (input_num == 2)
+		{
+			Search_data_age("Age");
+		}
+		else if (input_num == 3)
+		{
+			Search_data_name("Name");
+		}
+		else if (input_num == 0)
+		{
+			return 0;
+		}
+		else
+		{
+			printf("\n잘못된 입력입니다. 다시 선택해주세요.");
+			Sleep(5000);
+			SCREEN_CLEAR;
+		}
+	}
 }
 
 void* screen_addition(void)
@@ -151,14 +205,21 @@ void* screen_addition(void)
 
 	SCREEN_CLEAR;
 
-	printf("추가할 학생의 이름을 입력하세요: ");
+	printf("추가할 학생의 이름을 입력하세요 (0 입력시 메인으로 돌가가기): ");
 	scanf("%s", name);
-	printf("추가할 학생의 나이를 입력하세요: ");
-	scanf("%s", age);
-	printf("추가할 학생의 전화번호를 입력하세요: ");
-	scanf("%s", phone);
+	if (strcmp(name, "0") == 0)
+	{
+		return 0;
+	}
+	else
+	{
+		printf("추가할 학생의 나이를 입력하세요: ");
+		scanf("%d", &age);
+		printf("추가할 학생의 전화번호를 입력하세요: ");
+		scanf("%d", &phone);
 
-	Insert_data(name, age, phone);
+		Insert_data(name, age, phone);
+	}
 
 }
 
@@ -168,8 +229,16 @@ void* screen_delete(void)
 
 	SCREEN_CLEAR;
 
-	printf("삭제할 학생의 이름을 입력하세요: ");
+	printf("삭제할 학생의 이름을 입력하세요 (0 입력시 메인으로 돌가가기): ");
 	scanf("%s", name);
 
-	Delete_data(name);
+	if (strcmp(name, "0") == 0)
+	{
+		return 0;
+	}
+	else
+	{
+		Delete_data(name);
+	}
+
 }
