@@ -1,13 +1,13 @@
-ï»¿//ï¿½Ð»ï¿½ ï¿½ß°ï¿½
-//ï¿½Ð»ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½Ì¸ï¿½)
-//ï¿½Ð»ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È­ï¿½ï¿½È£ ï¿½Ë¾Æ¿ï¿½ï¿½ï¿½
-//ï¿½ï¿½Ã¼ ï¿½Ð»ï¿½ ï¿½ï¿½ï¿½ï¿½, (ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½, 2ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
-//  -. 'ï¿½ï¿½'ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 'ï¿½ï¿½'ï¿½ï¿½ï¿½ï¿½ ï¿½Ð»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½
-//  -. ï¿½ï¿½ï¿½Ì°ï¿½ ï¿½ï¿½ ï¿½Ì»ï¿½ ï¿½Ð»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½
+//ÇÐ»ý Ãß°¡
+//ÇÐ»ý »èÁ¦(ÀÌ¸§)
+//ÇÐ»ý ÀÌ¸§À¸·Î ÀüÈ­¹øÈ£ ¾Ë¾Æ¿À±â
+//ÀüÃ¼ ÇÐ»ý º¸±â, (°Ë»öÁ¶°Ç, 2°¡Áö·Î)
+//  -. '¼º'¸¸ º¸°í ¿¹¸¦µé¾î '±è'¾¾ÀÎ ÇÐ»ýµé ¸ñ·Ï º¸¿©ÁÖ±â
+//  -. ³ªÀÌ°¡ ¸î ÀÌ»ó ÇÐ»ýµé ¸ñ·Ï º¸¿©ÁÖ±â
 
-// 1. ï¿½Ð»ï¿½ ï¿½ß°ï¿½
-// 2. ï¿½Ð»ï¿½ ï¿½Ë»ï¿½
-// 3. ï¿½Ð»ï¿½ ï¿½ï¿½ï¿½ï¿½
+// 1. ÇÐ»ý Ãß°¡
+// 2. ÇÐ»ý °Ë»ö
+// 3. ÇÐ»ý »èÁ¦
 
 
 
@@ -17,21 +17,24 @@
 #include <string.h>
 #include <Windows.h>
 
-#define SCREEN_CLEAR system("cls"); //È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+#define SCREEN_CLEAR system("cls"); //È­¸é Áö¿ì±â
+
+
 
 //System Fn
-void* Search_data(void* t);
+void* Search_data_all(void* t);
 void* Search_data_age(void* t);
 void* Search_data_name(void* t);
-void* Insert_data(void* t);
-void* Delete_data(void* t);
+void* Insert_data(void* head, int chk);
+void* Delete_data(void* head, int chk);
 
 //UI Fn
 char* screen_main(void);
-void* screen_search(void);
-void* screen_addition(void);
-void* screen_delete(void);
-void* screen_exit(void);
+void* screen_search(void* head);
+void* screen_addition(void* head, int chk);
+void* screen_delete(void* head, int chk);
+
+
 
 typedef struct _student_info {
 	int age;
@@ -48,13 +51,16 @@ student_info* next;
 
 int main(void)
 {
-	const char* screen;
+	char* screen;
+	int chk;
 
 	head = malloc(sizeof(student_info));
 	head->age = 0;
 	head->phone = 0;
 	strcpy(head->name, "Empty");
 	head->next = NULL;
+	chk = 0;
+
 
 	while (1)
 	{
@@ -64,25 +70,25 @@ int main(void)
 
 		if (screen == "Search")
 		{
-			screen_search();
+			screen_search(head);
 		}
 		else if (screen == "Add")
 		{
-			screen_addition();
+			screen_addition(head, chk);
 		}
 		else if (screen == "Del")
 		{
-			screen_delete();
+			screen_delete(head, chk);
 		}
 		else if (screen == "Exit")
 		{
 			SCREEN_CLEAR;
-			printf("ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
+			printf("ÇÁ·Î±×·¥À» Á¾·áÇÕ´Ï´Ù.");
 			Sleep(5000);
 			exit(0);
 		}
 	}
-
+	
 
 
 	return 0;
@@ -106,12 +112,19 @@ void* Search_data_name(void* t)
 	NULL;
 }
 
-void* Insert_data(void* t)
+void* Insert_data(void* head, int chk, char name[32], int age, int phone)
 {
-	NULL;
+	if (chk == 0)
+	{
+
+	}
+	else
+	{
+
+	}
 }
 
-void* Delete_data(void* t)
+void* Delete_data(void* head, int chk, char name[32], int age, int phone)
 {
 	NULL;
 }
@@ -124,11 +137,11 @@ char* screen_main(void)
 
 	while (1)
 	{
-		printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.\n\n");
-		printf("1. ï¿½Ð»ï¿½ ï¿½Ë»ï¿½\n");
-		printf("2. ï¿½Ð»ï¿½ ï¿½ß°ï¿½\n");
-		printf("3. ï¿½Ð»ï¿½ ï¿½ï¿½ï¿½ï¿½\n");
-		printf("0. ï¿½ï¿½ï¿½Î±×·ï¿½ ï¿½ï¿½ï¿½ï¿½\n\n");
+		printf("¼öÇàÇÒ ÀÛ¾÷À» ¼±ÅÃÇÏ¼¼¿ä.\n\n");
+		printf("1. ÇÐ»ý °Ë»ö\n");
+		printf("2. ÇÐ»ý Ãß°¡\n");
+		printf("3. ÇÐ»ý »èÁ¦\n");
+		printf("0. ÇÁ·Î±×·¥ Á¾·á\n\n");
 
 		scanf("%d", &input_num);
 
@@ -150,14 +163,14 @@ char* screen_main(void)
 		}
 		else
 		{
-			printf("\nï¿½ß¸ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ô´Ï´ï¿½. ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½.");
+			printf("\nÀß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù. ´Ù½Ã ¼±ÅÃÇØÁÖ¼¼¿ä.");
 			Sleep(5000);
 			SCREEN_CLEAR;
 		}
 	}
 }
 
-void* screen_search(void)
+void* screen_search(void* head)
 {
 	int input_num = 0;
 
@@ -165,11 +178,11 @@ void* screen_search(void)
 
 	while (1)
 	{
-		printf("ï¿½Ë»ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.\n\n");
-		printf("1. ï¿½ï¿½Ã¼ ï¿½Ë»ï¿½\n");
-		printf("2. ï¿½ï¿½ï¿½ï¿½(ï¿½Ì»ï¿½) ï¿½Ë»ï¿½\n");
-		printf("3. ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½\n");
-		printf("0. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½\n\n");
+		printf("°Ë»ö Á¶°ÇÀ» ¼±ÅÃÇÏ¼¼¿ä.\n\n");
+		printf("1. ÀüÃ¼ °Ë»ö\n");
+		printf("2. ³ªÀÌ(ÀÌ»ó) °Ë»ö\n");
+		printf("3. ¼º¾¾ °Ë»ö\n");
+		printf("0. ¸ÞÀÎÀ¸·Î µ¹¾Æ°¡±â\n\n");
 
 		scanf("%d", &input_num);
 
@@ -191,21 +204,21 @@ void* screen_search(void)
 		}
 		else
 		{
-			printf("\nï¿½ß¸ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ô´Ï´ï¿½. ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½.");
+			printf("\nÀß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù. ´Ù½Ã ¼±ÅÃÇØÁÖ¼¼¿ä.");
 			Sleep(5000);
 			SCREEN_CLEAR;
 		}
 	}
 }
 
-void* screen_addition(void)
+void* screen_addition(void* head, int chk)
 {
 	int age = 0, phone = 0;
 	char name[32];
 
 	SCREEN_CLEAR;
 
-	printf("ï¿½ß°ï¿½ï¿½ï¿½ ï¿½Ð»ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½ (0 ï¿½Ô·Â½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½): ");
+	printf("Ãß°¡ÇÒ ÇÐ»ýÀÇ ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä (0 ÀÔ·Â½Ã ¸ÞÀÎÀ¸·Î µ¹°¡°¡±â): ");
 	scanf("%s", name);
 	if (strcmp(name, "0") == 0)
 	{
@@ -213,23 +226,23 @@ void* screen_addition(void)
 	}
 	else
 	{
-		printf("ï¿½ß°ï¿½ï¿½ï¿½ ï¿½Ð»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½: ");
+		printf("Ãß°¡ÇÒ ÇÐ»ýÀÇ ³ªÀÌ¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ");
 		scanf("%d", &age);
-		printf("ï¿½ß°ï¿½ï¿½ï¿½ ï¿½Ð»ï¿½ï¿½ï¿½ ï¿½ï¿½È­ï¿½ï¿½È£ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½: ");
+		printf("Ãß°¡ÇÒ ÇÐ»ýÀÇ ÀüÈ­¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ");
 		scanf("%d", &phone);
 
-		Insert_data(name, age, phone);
+		Insert_data(head, chk, name, age, phone);
 	}
 
 }
 
-void* screen_delete(void)
+void* screen_delete(void* head, int chk)
 {
 	char name[32];
 
 	SCREEN_CLEAR;
 
-	printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð»ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½ (0 ï¿½Ô·Â½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½): ");
+	printf("»èÁ¦ÇÒ ÇÐ»ýÀÇ ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä (0 ÀÔ·Â½Ã ¸ÞÀÎÀ¸·Î µ¹°¡°¡±â): ");
 	scanf("%s", name);
 
 	if (strcmp(name, "0") == 0)
