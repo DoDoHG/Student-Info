@@ -19,22 +19,19 @@
 
 #define SCREEN_CLEAR system("cls"); //ȭ�� �����
 
-
-
 //System Fn
-void* Search_data_all(void* t);
+void* Search_data(void* t);
 void* Search_data_age(void* t);
 void* Search_data_name(void* t);
-void* Insert_data(void* head, int chk);
-void* Delete_data(void* head, int chk);
+void* Insert_data(void* t);
+void* Delete_data(void* t);
 
 //UI Fn
 char* screen_main(void);
-void* screen_search(void* head);
-void* screen_addition(void* head, int chk);
-void* screen_delete(void* head, int chk);
-
-
+void* screen_search(void);
+void* screen_addition(void);
+void* screen_delete(void);
+void* screen_exit(void);
 
 typedef struct _student_info {
 	int age;
@@ -51,16 +48,13 @@ student_info* next;
 
 int main(void)
 {
-	char* screen;
-	int chk;
+	const char* screen;
 
 	head = malloc(sizeof(student_info));
 	head->age = 0;
 	head->phone = 0;
 	strcpy(head->name, "Empty");
 	head->next = NULL;
-	chk = 0;
-
 
 	while (1)
 	{
@@ -70,15 +64,15 @@ int main(void)
 
 		if (screen == "Search")
 		{
-			screen_search(head);
+			screen_search();
 		}
 		else if (screen == "Add")
 		{
-			screen_addition(head, chk);
+			screen_addition();
 		}
 		else if (screen == "Del")
 		{
-			screen_delete(head, chk);
+			screen_delete();
 		}
 		else if (screen == "Exit")
 		{
@@ -112,19 +106,12 @@ void* Search_data_name(void* t)
 	NULL;
 }
 
-void* Insert_data(void* head, int chk, char name[32], int age, int phone)
+void* Insert_data(void* t)
 {
-	if (chk == 0)
-	{
-
-	}
-	else
-	{
-
-	}
+	NULL;
 }
 
-void* Delete_data(void* head, int chk, char name[32], int age, int phone)
+void* Delete_data(void* t)
 {
 	NULL;
 }
@@ -170,7 +157,7 @@ char* screen_main(void)
 	}
 }
 
-void* screen_search(void* head)
+void* screen_search(void)
 {
 	int input_num = 0;
 
@@ -211,7 +198,7 @@ void* screen_search(void* head)
 	}
 }
 
-void* screen_addition(void* head, int chk)
+void* screen_addition(void)
 {
 	int age = 0, phone = 0;
 	char name[32];
@@ -231,12 +218,12 @@ void* screen_addition(void* head, int chk)
 		printf("�߰��� �л��� ��ȭ��ȣ�� �Է��ϼ���: ");
 		scanf("%d", &phone);
 
-		Insert_data(head, chk, name, age, phone);
+		Insert_data(name, age, phone);
 	}
 
 }
 
-void* screen_delete(void* head, int chk)
+void* screen_delete(void)
 {
 	char name[32];
 
